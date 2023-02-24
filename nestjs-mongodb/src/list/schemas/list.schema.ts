@@ -1,12 +1,13 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose'; 
+import { Document } from 'mongoose';
+import { CommentSchema } from './comment.schema';
 
-export type listDocument = list & Document; 
+export type listDocument = list & Document;
 
-@Schema() 
+@Schema()
 export class list {
-  @Prop() 
-  categoria : string;
+  @Prop()
+  categoria: string;
 
   @Prop()
   description: string;
@@ -20,8 +21,11 @@ export class list {
   @Prop()
   image_url: string;
 
-  @Prop([String]) 
+  @Prop([String])
   keywords: string[];
+
+  @Prop([CommentSchema])
+  comments: Comment[];
 }
 
-export const listSchema = SchemaFactory.createForClass(list); 
+export const listSchema = SchemaFactory.createForClass(list);

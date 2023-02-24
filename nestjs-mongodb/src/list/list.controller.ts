@@ -8,15 +8,15 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger'; 
+import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { ListService } from './list.service';
 import { CreateListDto } from './dto/create-list.dto';
 import { UpdateListDto } from './dto/update-list.dto';
+import { ParseObjectIdPipe } from 'src/utilities/parse-object-id-pipe.pipe';
 
 @Controller('list')
-@ApiTags('list') 
-
+@ApiTags('list')
 export class listController {
   constructor(private readonly listService: ListService) {}
 
@@ -26,22 +26,25 @@ export class listController {
   }
 
   @Get()
-  findAll(@Req() request: Request) { 
-    return this.listService.findAll(); 
+  findAll(@Req() request: Request) {
+    return this.listService.findAll(request);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.listService.findOne(id); 
+  @Get(':categoria')
+  findOne(@Param('categoria', ParseObjectIdPipe) categoria: string) {
+    return this.listService.findOne(categoria);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateListDto: UpdateListDto) {
-    return this.listService.update(id, updateListDto); 
+  @Patch(':categoria')
+  update(
+    @Param('categoria', ParseObjectIdPipe) categoria: string,
+    @Body() updateListDto: UpdateListDto,
+  ) {
+    return this.listService.update(categoria, updateListDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.listService.remove(id); 
+  @Delete(':categoria')
+  remove(@Param('categoria', ParseObjectIdPipe) categoria: string) {
+    return this.listService.remove(categoria);
   }
 }

@@ -6,9 +6,9 @@ import { list, listSchema } from './schemas/list.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: list.name, schema: listSchema }]), 
+    MongooseModule.forFeature([{ name: list.name, schema: listSchema }]),
   ],
   controllers: [listController],
   providers: [ListService],
 })
-export class BooksModule {}
+export class ListModule {}
